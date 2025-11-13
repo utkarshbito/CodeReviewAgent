@@ -433,6 +433,7 @@ optional_params_cli=(
   "enable_default_branch"
   "exclude_branches"
   "include_source_branches"
+  "labels_excluded"
   "include_target_branches"
   "post_as_request_changes"
   "suggestion_mode"
@@ -479,6 +480,7 @@ optional_params_server=(
   "enable_default_branch"
   "exclude_branches"
   "include_source_branches"
+  "labels_excluded"
   "include_target_branches"
   "post_as_request_changes"
   "suggestion_mode"
@@ -568,7 +570,7 @@ done
 for param in "${optional_params[@]}"; do
   if [ "$param" == "dependency_check.snyk_auth_token" ] && [ "${props["dependency_check"]}" == "True" ]; then
       ask_for_param "$param" "False"
-  elif [ "$param" != "acceptable_suggestions_enabled" ] && [ "$param" != "dependency_check.snyk_auth_token" ] && [ "$param" != "env" ] && [ "$param" != "cli_path" ] && [ "$param" != "output_path" ] && [ "$param" != "static_analysis_tool" ]  && [ "$param" != "linters_feedback" ] && [ "$param" != "secret_scanner_feedback" ] && [ "$param" != "enable_default_branch" ] && [ "$param" != "git.domain" ] && [ "$param" != "review_scope" ] && [ "$param" != "exclude_branches" ] && [ "$param" != "include_source_branches" ] && [ "$param" != "include_target_branches" ] && [ "$param" != "suggestion_mode" ] && [ "$param" != "locale" ] && [ "$param" != "nexus_url" ] && [ "$param" != "exclude_files" ] && [ "$param" != "exclude_draft_pr" ] && [ "$param" != "cr_event_type" ] && [ "$param" != "posting_to_pr" ] && [ "$param" != "custom_rules.configured_ws_ids" ] && [ "$param" != "custom_rules.aws_access_key_id" ] && [ "$param" != "custom_rules.aws_secret_access_key" ] && [ "$param" != "custom_rules.region_name" ] && [ "$param" != "custom_rules.bucket_name" ] && [ "$param" != "custom_rules.aes_key" ] && [ "$param" != "code_context_config.partial_timeout" ] && [ "$param" != "code_context_config.max_depth" ] && [ "$param" != "code_context_config.kill_timeout_sec" ] && [ "$param" != "post_as_request_changes" ] && [ "$param" != "support_email" ]; then
+  elif [ "$param" != "acceptable_suggestions_enabled" ] && [ "$param" != "dependency_check.snyk_auth_token" ] && [ "$param" != "env" ] && [ "$param" != "cli_path" ] && [ "$param" != "output_path" ] && [ "$param" != "static_analysis_tool" ]  && [ "$param" != "linters_feedback" ] && [ "$param" != "secret_scanner_feedback" ] && [ "$param" != "enable_default_branch" ] && [ "$param" != "git.domain" ] && [ "$param" != "review_scope" ] && [ "$param" != "exclude_branches" ] && [ "$param" != "include_source_branches" ] && [ "$param" != "labels_excluded" ] && [ "$param" != "include_target_branches" ] && [ "$param" != "suggestion_mode" ] && [ "$param" != "locale" ] && [ "$param" != "nexus_url" ] && [ "$param" != "exclude_files" ] && [ "$param" != "exclude_draft_pr" ] && [ "$param" != "cr_event_type" ] && [ "$param" != "posting_to_pr" ] && [ "$param" != "custom_rules.configured_ws_ids" ] && [ "$param" != "custom_rules.aws_access_key_id" ] && [ "$param" != "custom_rules.aws_secret_access_key" ] && [ "$param" != "custom_rules.region_name" ] && [ "$param" != "custom_rules.bucket_name" ] && [ "$param" != "custom_rules.aes_key" ] && [ "$param" != "code_context_config.partial_timeout" ] && [ "$param" != "code_context_config.max_depth" ] && [ "$param" != "code_context_config.kill_timeout_sec" ] && [ "$param" != "post_as_request_changes" ] && [ "$param" != "support_email" ]; then
       ask_for_param "$param" "False"
   fi
 done
@@ -622,6 +624,8 @@ for param in "${required_params[@]}" "${bee_params[@]}" "${optional_params[@]}";
         docker_cmd+=" --exclude_branches='${props[$param]}'"
     elif [ "$param" == "include_source_branches" ]; then
         docker_cmd+=" --include_source_branches='${props[$param]}'"
+    elif [ "$param" == "labels_excluded" ]; then
+        docker_cmd+=" --labels_excluded='${props[$param]}'"
     elif [ "$param" == "include_target_branches" ]; then
         docker_cmd+=" --include_target_branches='${props[$param]}'"
     elif [ "$param" == "suggestion_mode" ]; then
